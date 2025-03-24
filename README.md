@@ -30,6 +30,8 @@ All projects will require the following:
 
 ### Forumla
 What is the formula for your force? Including descriptions/definitions for the symbols. (You may include a picture of the formula if it is not easily typed.)
+
+
 ![Screenshot 2025-03-24 at 15-11-23 centripetal force - Wikipedia](https://github.com/user-attachments/assets/4cb5bffe-6e63-4b42-8e27-a6f4b05d584f)
 
 
