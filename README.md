@@ -36,10 +36,6 @@ What is the formula for your force? Including descriptions/definitions for the s
 ![image](https://github.com/user-attachments/assets/0849d03d-ce7a-4ac6-9f9c-b0ca56c3379f)
 
 
-Alternate Force we could do
-![image](https://github.com/user-attachments/assets/ff02a197-a742-4cdb-ba1f-4d5118e2b0ad)
-
-
 
 
 ### Custom Force
