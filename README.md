@@ -40,19 +40,19 @@ Alternate Force we could do
 
 ### Custom Force
 - What information that is already present in the `Orb` or `OrbNode` classes does this force use?
-  - YOUR ANSWER HERE
+  - Momentum: Mass and Acceleration
 
 - Does this force require any new constants, if so what are they and what values will you try initially?
-  - YOUR ANSWER HERE
+  - Momentum: No constants
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
-  - YOUR ANSWER HERE
+  - Momentum: No new information is added
 
 - Does this force interact with other `Orbs`, or is it applied based on the environment?
-  - YOUR ANSWER HERE
+  - Momentum: It interacts when colliding with other orbs
 
 - In order to calculate this force, do you need to perform extra intermediary calculations? If so, what?
-  - YOUR ANSWER HERE
+  - Momentum: No intermediary calculations
 
 --- 
 
@@ -75,15 +75,15 @@ YOUR ANSWER HERE
 
 --- 
 
-### Simulation 4: Custom force
+### Simulation 4: Momentum and/or Centripetal force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
-
+Centripetal Force: Have the orbs orbit around the sun with their centripetal force keeping them from falling in
+Momentum: Ball Collision and then showing resulting accelerations
 --- 
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-YOUR ANSWER HERE
+
 
