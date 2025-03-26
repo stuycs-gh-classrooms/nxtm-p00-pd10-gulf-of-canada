@@ -78,7 +78,7 @@ Two orbs are placed vertically. The higher orb is fixed and the lower orb can on
 ### Simulation 3: Drag
 Describe what your drag simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-An orb will be dropped and gravity will pull it down. There will be a white and blue area of the screen, the blue area activates the drag and thus should slow the orb down.
+An orb will be dropped and gravity will pull it down. There will be a white, red and blue area of the screen, the red area activates minimal drag, and the blue area activates substantial drag and thus should slow the orb down.
 
 --- 
 
