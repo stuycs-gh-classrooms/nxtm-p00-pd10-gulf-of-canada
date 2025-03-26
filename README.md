@@ -26,13 +26,13 @@ All projects will require the following:
 ## Phase 0: Force Selection, Analysis & Plan
 ---------- 
 
-#### Custom Force: Centripetal Force, Collisions
+#### Custom Force: Centripetal Force
 
 ### Forumla
 What is the formula for your force? Including descriptions/definitions for the symbols. (You may include a picture of the formula if it is not easily typed.)
 
 
-![Screenshot 2025-03-24 at 15-11-23 centripetal force - Wikipedia](https://github.com/user-attachments/assets/4cb5bffe-6e63-4b42-8e27-a6f4b05d584f)
+![Screenshot 2025-03-24 at 15-11-23 centripetal force - Wikipedia](https://github.com/user-attachments/assets/4cb5bffe-6e63-4b42-8e27-a6f4b05d584f) <br>
 F is the force <br>
 m is the mass <br>
 v^2 is the velocity squared <br>
@@ -51,7 +51,7 @@ r hat is the unit vector from the center <br>
   - The normalized vector of r, r^2
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
-  - N/A
+  - Minimum and maximum string length, both of which will be floats
 
 - Does this force interact with other `Orbs`, or is it applied based on the environment?
   - It interacts with other orbs
@@ -71,7 +71,7 @@ Two orbs placed randomly with the only forces acting on them being each other's 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Two orbs are placed vertically. The higher orb is fixed and the lower orb can only be moved in the y-xais. Earth will be off the screen and gravity will be presnt. For the purpose of demonstration, the length of the spring is finite. As the lower orb reaches the maximum spring length, it should jolt back up, eventually becomjng still.
+Two orbs are placed vertically. The higher orb is fixed and the lower orb can only be moved in the y-xais. Earth will be off the screen and gravity will be presnt. For the purpose of demonstration, the length of the spring is finite. As the lower orb reaches the maximum spring length, it should bounce back up. This effect is dampened each time until the orb stops moving.
 
 --- 
 
@@ -92,4 +92,8 @@ Create a fixed orb connected to an orb. When the orb is not moving, the string s
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Building onto simulation 4 but now there can be "asteroids" that collide with planets with drag also being activ
+Combining: gravity, drag, and centripetal force<br> 
+A fixed orb will be centered on-screen with its gravity acting on an orbiting orb. The orbiting orb's velocity will slowly increase tangentially to the force of gravity, eventually spinning further and further away as the velocity of the orbiting orb overcomes the force of gravity. All of thsi happens as drag is acting.
+
+
+
