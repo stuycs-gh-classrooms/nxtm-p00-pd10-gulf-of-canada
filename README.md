@@ -64,14 +64,14 @@ r hat is the unit vector from the center <br>
 ### Simulation 1: Gravity
 Describe how you will attempt to simulate orbital motion.
 
-Two orbs placed randomly with the only forces acting on them being each other's gravitational pull
+Two orbs placed randomly with the only forces acting on them being each other's gravitational pull. The two orbs should keep moving back and forth.
 
 --- 
 
 ### Simulation 2: Spring
 Describe what your spring simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Two orbs are placed vertically. The higher orb can move only about the x-axis, while the lower orb can move about the x-axis and y-axis. For the purpose of demonstration, the length of the spring is finite. 
+Two orbs are placed vertically. The higher orb is fixed and the lower orb can only be moved in the y-xais. Earth will be off the screen and gravity will be presnt. For the purpose of demonstration, the length of the spring is finite. As the lower orb reaches the maximum spring length, it should jolt back up, eventually becomjng still.
 
 --- 
 
@@ -82,11 +82,10 @@ An orb will be dropped and gravity will pull it down. There will be a white and 
 
 --- 
 
-### Simulation 4: Momentum and/or Centripetal force
+### Simulation 4: Centripetal force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-#### Centripetal Force: Have the orbs orbit around the sun with their centripetal force keeping them from falling in
-#### Momentum: Ball Collision and then showing resulting accelerations
+Create a fixed orb at the center of the screen with its gravity active. Create new orbs off the screen with set intial velocities. As they 
 
 --- 
 
