@@ -85,13 +85,11 @@ An orb will be dropped and gravity will pull it down. There will be a white and 
 ### Simulation 4: Centripetal force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Create a fixed orb at the center of the screen with its gravity active. Create new orbs off the screen with set intial velocities. As they 
+Create a fixed orb connected to an orb. When the orb is not moving, the string should be at its minimum length. As velocity is added tangentially to the string, the orb will revolve around the fixed orb and the string should extend until it reaches its maximum length
 
 --- 
 
 ### Simulation 5: Combination
 Describe what your combination simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-Building onto simulation 4 but now there can be "asteroids" that collide with planets with drag also being active.
-
-
+Building onto simulation 4 but now there can be "asteroids" that collide with planets with drag also being activ
