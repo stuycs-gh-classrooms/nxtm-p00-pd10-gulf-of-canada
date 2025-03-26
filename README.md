@@ -33,30 +33,31 @@ What is the formula for your force? Including descriptions/definitions for the s
 
 
 ![Screenshot 2025-03-24 at 15-11-23 centripetal force - Wikipedia](https://github.com/user-attachments/assets/4cb5bffe-6e63-4b42-8e27-a6f4b05d584f)
-F is the force
-m is the mass
-v^2 is the velocity squared
-r is the radius 
-r hat is the unit vector from the center
+F is the force <br>
+m is the mass <br>
+v^2 is the velocity squared <br>
+r is the radius <br>
+r hat is the unit vector from the center <br>
 
 
 
 
 ### Custom Force
 - What information that is already present in the `Orb` or `OrbNode` classes does this force use?
-  - Momentum: Mass and Acceleration
+  - mass, velocity
 
 - Does this force require any new constants, if so what are they and what values will you try initially?
-  - Momentum: No constants
+  - The distance between the center of centripetal force and the orb going around, r
+  - The normalized vector of r, r^2
 
 - Does this force require any new information to be added to the `Orb` class? If so, what is it and what data type will you use?
-  - Momentum: No new information is added
+  - N/A
 
 - Does this force interact with other `Orbs`, or is it applied based on the environment?
-  - Momentum: It interacts when colliding with other orbs
+  - It interacts with other orbs
 
 - In order to calculate this force, do you need to perform extra intermediary calculations? If so, what?
-  - Momentum: No intermediary calculations
+  - Yes: F<sub>c</sub> =  m * a<sub>c</sub> with a<sub>c</sub> = v<sup>2</sup>/r 
 
 --- 
 
