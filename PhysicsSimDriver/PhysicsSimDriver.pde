@@ -83,14 +83,13 @@ void draw() {
 
 
     if (toggles[CENTRIPETAL]) {
+      o1.applyForce(o1.getCentripetal(o, true, SPRING_LENGTH));    
+      
+      
+      o.display();
       
       stroke(0);
       line(o.center.x, o.center.y, o1.center.x, o1.center.y);
-      
-      o1.applyForce(o1.getCentripetal(o));    
-      
-      o.display();
- 
     }
 
     if (toggles[COMBINED]) {
@@ -133,9 +132,20 @@ void keyPressed() {
     o = new FixedOrb();
   }
 }//keyPressed
+PVector makeTangent(PVector r){
+   return new PVector(-r.y, r.x); //tangent vector
+
+}
+
 void mousePressed(){
   if (toggles[CENTRIPETAL]){
-    o1.acceleration.add(new PVector(1, 0));
+    //o1.acceleration.add(10*(PVector.sub(o1.center, o.center).normalize().y), -10*(PVector.sub(o1.center, o.center).normalize().x));
+    o1.velocity.add(new PVector(1, 0));
+    //float invx = o1.getCentripetal(o, true, SPRING_LENGTH).x * -1;
+    //float y = o1.getCentripetal(o, true, SPRING_LENGTH).x;
+    
+    PVector velocity = makeTangent(o1.getCentripetal(o, true, SPRING_LENGTH));
+    o1.applyForce(velocity);
   }
 }
 
