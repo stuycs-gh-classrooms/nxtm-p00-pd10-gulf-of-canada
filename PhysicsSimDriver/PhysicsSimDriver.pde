@@ -15,12 +15,11 @@ int GRAVITY = 2;
 int SPRING = 3;
 int DRAGF = 4;
 int CENTRIPETAL = 5;
-int MOMENTUM = 6;
-int COMBINED = 7;
-boolean[] toggles = new boolean[8];
-String[] modes = {"Moving", "Bounce", "Gravity", "Spring" ,"Drag", "Centripetal", "Momentum", "Combined"}; //should probably only choose one of the two forces
-
-FixedOrb earth;
+int COMBINED = 6;
+boolean[] toggles = new boolean[7];
+String[] modes = {"Moving", "Bounce", "Gravity", "Spring", "Drag", "Centripetal", "Combined"};
+FixedOrb earth, o;
+Orb o0, o1;
 
 
 void setup() {
@@ -28,6 +27,9 @@ void setup() {
 
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
 
+  o0 = new Orb();
+  o1 = new Orb();
+  o = new FixedOrb();
 }//setup
 
 void draw() {
@@ -35,19 +37,71 @@ void draw() {
   displayMode();
 
 
+
   if (toggles[MOVING]) {
-
-    
-
     if (toggles[GRAVITY]) {
+      o0.applyForce(o0.getGravity(o1, G_CONSTANT));
+      o1.applyForce(o1.getGravity(o0, G_CONSTANT));
       
+      o0.move(false);
+      o1.move(false);
     }
-    
-    if (toggles[SPRING]){
-    
+
+    if (toggles[DRAGF]) { //manually turn on gravity?
+      //println("tsugoshi");
+      fill(255, 0, 0);
+      rect(0, 200, width, 200);
+      fill(136, 205, 236);
+      rect(0, 400, width, 200);
+
+      if (o0.center.y + o0.bsize/2 > 200) {
+        o0.applyForce(o0.getDragForce(10*D_COEF));
+        if (o0.center.y + o0.bsize/2 > 400) {
+          o0.applyForce(o0.getDragForce(100*D_COEF));
+        }
+      }
+
+      if (o1.center.y + o1.bsize/2 > 200) {
+        o1.applyForce(o1.getDragForce(10*D_COEF));
+        if (o1.center.y + o1.bsize/2 > 400) {
+          o1.applyForce(o1.getDragForce(100*D_COEF));
+        }
+      }
     }
-    
+
+
+
+    if (toggles[SPRING]) {
+      stroke(0);
+      line(o0.center.x, o0.center.y, o1.center.x, o1.center.y);
+
+
+      o0.applyForce(o0.getSpring(o1, SPRING_LENGTH, SPRING_K));
+      o1.applyForce(o1.getSpring(o0, SPRING_LENGTH, SPRING_K));
+    }
+
+
+
+    if (toggles[CENTRIPETAL]) {
+      
+      stroke(0);
+      line(o.center.x, o.center.y, o1.center.x, o1.center.y);
+      
+      o1.applyForce(o1.getCentripetal(o));    
+      
+      o.display();
+ 
+    }
+
+    if (toggles[COMBINED]) {
+    }
   }//moving
+
+  o0.move(false);
+  o1.move(false);
+
+  o0.display();
+  o1.display();
 }//draw
 
 
@@ -59,25 +113,31 @@ void keyPressed() {
     toggles[BOUNCE] = !toggles[BOUNCE];
   }
   if (key == '1') {
-   toggles[GRAVITY] = !toggles[GRAVITY]; 
+    toggles[GRAVITY] = !toggles[GRAVITY];
   }
-  if (key == '2'){
+  if (key == '2') {
     toggles[SPRING] = !toggles[SPRING];
   }
-  if (key == '3'){
+  if (key == '3') {
     toggles[DRAGF] = !toggles[DRAGF];
   }
   if (key == '4') {
-   toggles[CENTRIPETAL] = !toggles[CENTRIPETAL];
+    toggles[CENTRIPETAL] = !toggles[CENTRIPETAL];
   }
   if (key == '5') {
-   toggles[MOMENTUM] = !toggles[MOMENTUM];
+    toggles[COMBINED] = !toggles[COMBINED];
   }
-  if (key == '6') {
-   toggles[COMBINED] = !toggles[COMBINED];
+  if (key == 'r') {
+    o0 = new Orb();
+    o1 = new Orb();
+    o = new FixedOrb();
   }
 }//keyPressed
-
+void mousePressed(){
+  if (toggles[CENTRIPETAL]){
+    o1.acceleration.add(new PVector(1, 0));
+  }
+}
 
 void displayMode() {
   textAlign(LEFT, TOP);

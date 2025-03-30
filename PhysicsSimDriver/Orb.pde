@@ -34,6 +34,7 @@ class Orb {
     if (bounce) {
       xBounce();
       yBounce();
+      toggles[BOUNCE] = true;
     }
 
     velocity.add(acceleration);
@@ -78,6 +79,17 @@ class Orb {
 
     return direction;
   }//getSpring
+  
+  PVector getCentripetal(Orb other){
+    PVector r = PVector.sub(other.center, this.center);
+    PVector rhat = r.copy().normalize();
+    
+    float velocity = this.velocity.mag()*this.velocity.mag();
+    rhat.mult(this.mass * velocity * 1);
+    rhat.div(max(other.bsize, r.mag()));
+    
+    return rhat;
+  }
 
   boolean yBounce(){
     if (center.y > height - bsize/2) {
