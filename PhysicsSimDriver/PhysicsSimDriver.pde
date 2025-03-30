@@ -20,6 +20,7 @@ boolean[] toggles = new boolean[7];
 String[] modes = {"Moving", "Bounce", "Gravity", "Spring", "Drag", "Centripetal", "Combined"};
 FixedOrb earth, o;
 Orb o0, o1;
+OrbNode front;
 
 
 void setup() {
@@ -30,6 +31,7 @@ void setup() {
   o0 = new Orb();
   o1 = new Orb();
   o = new FixedOrb();
+  
 }//setup
 
 void draw() {
@@ -42,9 +44,6 @@ void draw() {
     if (toggles[GRAVITY]) {
       o0.applyForce(o0.getGravity(o1, G_CONSTANT));
       o1.applyForce(o1.getGravity(o0, G_CONSTANT));
-      
-      o0.move(false);
-      o1.move(false);
     }
 
     if (toggles[DRAGF]) { //manually turn on gravity?
@@ -93,11 +92,19 @@ void draw() {
     }
 
     if (toggles[COMBINED]) {
+      o.center = new PVector(width/2, height/2);
+     
+      o.display();
+      
+      o0.applyForce(o0.getGravity(o, G_CONSTANT));
+      o1.applyForce(o1.getCentripetal(o, true, SPRING_LENGTH));
+      stroke(0);
+      line(o.center.x, o.center.y, o1.center.x, o1.center.y);
     }
-  }//moving
-
+    
   o0.move(false);
   o1.move(false);
+  }//moving
 
   o0.display();
   o1.display();
@@ -138,7 +145,7 @@ PVector makeTangent(PVector r){
 }
 
 void mousePressed(){
-  if (toggles[CENTRIPETAL]){
+  if (toggles[CENTRIPETAL] || toggles[COMBINED]){
     //o1.acceleration.add(10*(PVector.sub(o1.center, o.center).normalize().y), -10*(PVector.sub(o1.center, o.center).normalize().x));
     o1.velocity.add(new PVector(1, 0));
     //float invx = o1.getCentripetal(o, true, SPRING_LENGTH).x * -1;

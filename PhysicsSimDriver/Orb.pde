@@ -80,7 +80,7 @@ class Orb {
     return direction;
   }//getSpring
   PVector getCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
-    float radius = max(5, PVector.dist(other.center, this.center));
+    float radius = max(max(other.bsize/2, this.bsize/2), PVector.dist(other.center, this.center));
     float centripetalForce = this.mass * this.velocity.magSq() / radius;
     
     if (fixedStringLength) {
