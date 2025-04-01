@@ -102,8 +102,8 @@ void draw() {
       line(o.center.x, o.center.y, o1.center.x, o1.center.y);
     }
     
-  o0.move(false);
-  o1.move(false);
+  o0.move(true);
+  o1.move(true);
   }//moving
 
   o0.display();
@@ -145,14 +145,15 @@ PVector makeTangent(PVector r){
 }
 
 void mousePressed(){
-  if (toggles[CENTRIPETAL] || toggles[COMBINED]){
+  if (toggles[CENTRIPETAL] || toggles[COMBINED] || toggles[GRAVITY]){
     //o1.acceleration.add(10*(PVector.sub(o1.center, o.center).normalize().y), -10*(PVector.sub(o1.center, o.center).normalize().x));
-    o1.velocity.add(new PVector(1, 0));
+    //o1.velocity.add(new PVector(1, 0));
     //float invx = o1.getCentripetal(o, true, SPRING_LENGTH).x * -1;
     //float y = o1.getCentripetal(o, true, SPRING_LENGTH).x;
     
-    PVector velocity = makeTangent(o1.getCentripetal(o, true, SPRING_LENGTH));
+    PVector velocity = makeTangent(o1.getGravity(o, 1));
     o1.applyForce(velocity);
+    o0.applyForce(velocity);
   }
 }
 
