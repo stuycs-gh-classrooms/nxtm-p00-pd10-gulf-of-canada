@@ -7,6 +7,7 @@ class Orb {
   float bsize;
   float mass;
   color c;
+  float maxSpeed;
 
 
   Orb() {
@@ -18,6 +19,7 @@ class Orb {
     velocity = new PVector();
     acceleration = new PVector();
     setColor();
+    maxSpeed = 400;
   }
 
   Orb(float x, float y, float s, float m) {
@@ -27,6 +29,7 @@ class Orb {
     velocity = new PVector();
     acceleration = new PVector();
     setColor();
+    maxSpeed = 400;
   }
 
   //movement behavior
@@ -37,6 +40,14 @@ class Orb {
     }
 
     velocity.add(acceleration);
+    
+    if (velocity.mag() > maxSpeed){
+      PVector dir = velocity.copy().normalize();
+      float mag = 400;
+      velocity = dir.mult(mag);
+    }
+    
+    
     center.add(velocity);
     acceleration.mult(0);
   }//move
@@ -79,7 +90,7 @@ class Orb {
     return direction;
   }//getSpring
   PVector getCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
-    float radius = max(max(other.bsize/2, this.bsize/2), PVector.dist(other.center, this.center));
+    float radius = max(maxSpeed, PVector.dist(other.center, this.center));
     float centripetalForce = this.mass * this.velocity.magSq() / radius;
     
     if (fixedStringLength) {

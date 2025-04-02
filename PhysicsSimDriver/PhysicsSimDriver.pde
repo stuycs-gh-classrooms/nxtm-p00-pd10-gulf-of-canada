@@ -62,9 +62,9 @@ void draw() {
       //apply drag o0
 
       if (o1.center.y + o1.bsize/2 > 200) {
-        o1.applyForce(o1.getDragForce(10*D_COEF));
+        o1.applyForce(o1.getDragForce(3*D_COEF));
         if (o1.center.y + o1.bsize/2 > 400) {
-          o1.applyForce(o1.getDragForce(100*D_COEF));
+          o1.applyForce(o1.getDragForce(10*D_COEF));
         } //If above y=400
       } //If above y=200
     } //apply drag o1
@@ -101,6 +101,7 @@ void draw() {
       o1.applyForce(o1.getCentripetal(o, true, SPRING_LENGTH));
       stroke(0);
       line(o.center.x, o.center.y, o1.center.x, o1.center.y);
+      println(o1.center.x);
     }
     
   o0.move();
@@ -152,7 +153,7 @@ void mousePressed(){
     //float invx = o1.getCentripetal(o, true, SPRING_LENGTH).x * -1;
     //float y = o1.getCentripetal(o, true, SPRING_LENGTH).x;
     
-    PVector velocity = makeTangent(o1.getGravity(o, 1));
+    PVector velocity = makeTangent(o1.getGravity(o, G_CONSTANT));
     o1.applyForce(velocity);
     o0.applyForce(velocity);
   }
