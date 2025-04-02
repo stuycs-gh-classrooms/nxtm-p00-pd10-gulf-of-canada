@@ -30,11 +30,10 @@ class Orb {
   }
 
   //movement behavior
-  void move(boolean bounce) {
-    if (bounce) {
+  void move() {
+    if (toggles[BOUNCE]) {
       xBounce();
       yBounce();
-      toggles[BOUNCE] = true;
     }
 
     velocity.add(acceleration);

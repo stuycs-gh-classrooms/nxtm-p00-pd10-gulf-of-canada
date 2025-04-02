@@ -47,7 +47,7 @@ void draw() {
     }
 
     if (toggles[DRAGF]) { //manually turn on gravity?
-      //println("tsugoshi");
+      //println("fukakouryuku");
       fill(255, 0, 0);
       rect(0, 200, width, 200);
       fill(136, 205, 236);
@@ -57,16 +57,17 @@ void draw() {
         o0.applyForce(o0.getDragForce(10*D_COEF));
         if (o0.center.y + o0.bsize/2 > 400) {
           o0.applyForce(o0.getDragForce(100*D_COEF));
-        }
-      }
+        } //If above y=400
+      } //If above y=200
+      //apply drag o0
 
       if (o1.center.y + o1.bsize/2 > 200) {
         o1.applyForce(o1.getDragForce(10*D_COEF));
         if (o1.center.y + o1.bsize/2 > 400) {
           o1.applyForce(o1.getDragForce(100*D_COEF));
-        }
-      }
-    }
+        } //If above y=400
+      } //If above y=200
+    } //apply drag o1
 
 
 
@@ -102,8 +103,8 @@ void draw() {
       line(o.center.x, o.center.y, o1.center.x, o1.center.y);
     }
     
-  o0.move(true);
-  o1.move(true);
+  o0.move();
+  o1.move();
   }//moving
 
   o0.display();
