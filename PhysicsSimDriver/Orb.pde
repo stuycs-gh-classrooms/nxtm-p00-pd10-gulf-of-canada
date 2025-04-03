@@ -41,13 +41,6 @@ class Orb {
 
     velocity.add(acceleration);
     
-    if (velocity.mag() > maxSpeed){
-      PVector dir = velocity.copy().normalize();
-      float mag = 400;
-      velocity = dir.mult(mag);
-    }
-    
-    
     center.add(velocity);
     acceleration.mult(0);
   }//move
@@ -90,7 +83,7 @@ class Orb {
     return direction;
   }//getSpring
   PVector getCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
-    float radius = max(maxSpeed, PVector.dist(other.center, this.center));
+    float radius = max(0.1, PVector.dist(other.center, this.center));
     float centripetalForce = this.mass * this.velocity.magSq() / radius;
     
     if (fixedStringLength) {
