@@ -119,21 +119,51 @@ void keyPressed() {
   }
   if (key == 'b') {
     toggles[BOUNCE] = !toggles[BOUNCE];
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
   }
   if (key == '1') {
     toggles[GRAVITY] = !toggles[GRAVITY];
+    toggles[BOUNCE] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
   }
   if (key == '2') {
     toggles[SPRING] = !toggles[SPRING];
+    toggles[BOUNCE] = false;
+    toggles[GRAVITY] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
   }
   if (key == '3') {
     toggles[DRAGF] = !toggles[DRAGF];
+    toggles[BOUNCE] = false;
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
   }
   if (key == '4') {
     toggles[CENTRIPETAL] = !toggles[CENTRIPETAL];
+    toggles[BOUNCE] = false;
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[COMBINED] = false;
   }
   if (key == '5') {
     toggles[COMBINED] = !toggles[COMBINED];
+    toggles[BOUNCE] = false;
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
   }
   if (key == 'r') {
     o0 = new Orb();
