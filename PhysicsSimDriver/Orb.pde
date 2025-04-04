@@ -62,8 +62,7 @@ class Orb {
 
   PVector getGravity(Orb other, float G) {
     float strength = G * mass*other.mass;
-    //dont want to divide by 0!
-    float r = max(center.dist(other.center), MIN_SIZE);
+    float r = max(center.dist(other.center), MIN_SIZE); //dont want to divide by 0!
     strength = strength/ pow(r, 2);
     PVector force = other.center.copy();
     force.sub(center);
@@ -83,7 +82,7 @@ class Orb {
     return direction;
   }//getSpring
   PVector getCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
-    float radius = max(0.1, PVector.dist(other.center, this.center));
+    float radius = max(max(this.bsize, other.bsize), PVector.dist(other.center, this.center)); //the bigger of the two orbs otherwise will teleport from center to fixed distance away
     float centripetalForce = this.mass * this.velocity.magSq() / radius;
     
     if (fixedStringLength) {
@@ -95,6 +94,10 @@ class Orb {
     
     return direction;
 }
+  PVector makeTangent(PVector r){
+   return new PVector(-r.y, r.x); //tangent vector
+
+  }
 
   boolean yBounce() {
     if (center.y > height - bsize/2) {

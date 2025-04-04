@@ -19,18 +19,19 @@ int COMBINED = 6;
 boolean[] toggles = new boolean[7];
 String[] modes = {"Moving", "Bounce", "Gravity", "Spring", "Drag", "Centripetal", "Combined"};
 FixedOrb earth, o;
-Orb o0, o1;
 OrbNode front;
+OrbList LL;
 
 
 void setup() {
   size(600, 600);
 
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
-
-  o0 = new Orb();
-  o1 = new Orb();
-  o = new FixedOrb();
+  front = null;
+  LL = new OrbList();
+  LL.populate(NUM_ORBS, false);
+  
+  o = new FixedOrb(width/2, height/2, random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
   
 }//setup
 
@@ -39,11 +40,35 @@ void draw() {
   displayMode();
 
 
+  
+  if (toggles[MOVING]) {
 
+    if (toggles[GRAVITY]) {
+      LL.applyGravity(earth, G_CONSTANT);
+    }
+    
+    if (toggles[SPRING]){
+      LL.applySprings(SPRING_LENGTH, SPRING_K);
+    }
+    
+    if (toggles[DRAGF]){
+      fill(225, 0, 0);
+      rect(0, 200, width, 200);
+      fill(36, 205, 236);
+      rect(0, 400, width, 200);
+      
+      LL.applyGravity(earth, G_CONSTANT);
+      LL.applyDrag(D_COEF);
+    }   
+    o.display();
+    LL.display();
+    LL.run(toggles[BOUNCE]);
+  }//moving
+/*
   if (toggles[MOVING]) {
     if (toggles[GRAVITY]) {
-      o0.applyForce(o0.getGravity(o1, G_CONSTANT));
-      o1.applyForce(o1.getGravity(o0, G_CONSTANT));
+      o0.applyForce(o0.getGravity(earth, G_CONSTANT));
+      o1.applyForce(o1.getGravity(earth, G_CONSTANT));
     }
 
     if (toggles[DRAGF]) { //manually turn on gravity?
@@ -74,6 +99,7 @@ void draw() {
     if (toggles[SPRING]) {
       stroke(0);
       line(o0.center.x, o0.center.y, o1.center.x, o1.center.y);
+      line(o0.center.x, o0.center.y + 5, o1.center.x, o1.center.y + 5);
 
 
       o0.applyForce(o0.getSpring(o1, SPRING_LENGTH, SPRING_K));
@@ -103,13 +129,9 @@ void draw() {
       line(o.center.x, o.center.y, o1.center.x, o1.center.y);
       println(o1.center.x);
     }
+    */
     
-  o0.move();
-  o1.move();
-  }//moving
-
-  o0.display();
-  o1.display();
+  //moving
 }//draw
 
 
@@ -119,62 +141,58 @@ void keyPressed() {
   }
   if (key == 'b') {
     toggles[BOUNCE] = !toggles[BOUNCE];
-    toggles[GRAVITY] = false;
-    toggles[SPRING] = false;
-    toggles[DRAGF] = false;
-    toggles[CENTRIPETAL] = false;
-    toggles[COMBINED] = false;
   }
   if (key == '1') {
     toggles[GRAVITY] = !toggles[GRAVITY];
-    toggles[BOUNCE] = false;
     toggles[SPRING] = false;
     toggles[DRAGF] = false;
     toggles[CENTRIPETAL] = false;
     toggles[COMBINED] = false;
+    reset();
   }
   if (key == '2') {
     toggles[SPRING] = !toggles[SPRING];
-    toggles[BOUNCE] = false;
     toggles[GRAVITY] = false;
     toggles[DRAGF] = false;
     toggles[CENTRIPETAL] = false;
     toggles[COMBINED] = false;
+    reset();
   }
   if (key == '3') {
     toggles[DRAGF] = !toggles[DRAGF];
-    toggles[BOUNCE] = false;
     toggles[GRAVITY] = false;
     toggles[SPRING] = false;
     toggles[CENTRIPETAL] = false;
     toggles[COMBINED] = false;
+    reset();
   }
   if (key == '4') {
     toggles[CENTRIPETAL] = !toggles[CENTRIPETAL];
-    toggles[BOUNCE] = false;
     toggles[GRAVITY] = false;
     toggles[SPRING] = false;
     toggles[DRAGF] = false;
     toggles[COMBINED] = false;
+    reset();
   }
   if (key == '5') {
     toggles[COMBINED] = !toggles[COMBINED];
-    toggles[BOUNCE] = false;
     toggles[GRAVITY] = false;
     toggles[SPRING] = false;
     toggles[DRAGF] = false;
     toggles[CENTRIPETAL] = false;
+    reset();
   }
+  if (key == '+' || key == '='){
+    LL.addFront(new OrbNode());
+  }
+  if (key == '-'){
+    LL.removeFront();
+  }
+  
   if (key == 'r') {
-    o0 = new Orb();
-    o1 = new Orb();
-    o = new FixedOrb();
+    reset();
   }
 }//keyPressed
-PVector makeTangent(PVector r){
-   return new PVector(-r.y, r.x); //tangent vector
-
-}
 
 void mousePressed(){
   if (toggles[CENTRIPETAL] || toggles[COMBINED] || toggles[GRAVITY]){
@@ -182,11 +200,22 @@ void mousePressed(){
     //o1.velocity.add(new PVector(1, 0));
     //float invx = o1.getCentripetal(o, true, SPRING_LENGTH).x * -1;
     //float y = o1.getCentripetal(o, true, SPRING_LENGTH).x;
-    
-    PVector velocity = makeTangent(o1.getGravity(o, G_CONSTANT));
+   /* 
+    PVector velocity = o1.makeTangent(o1.getGravity(o, G_CONSTANT));
     o1.applyForce(velocity);
-    o0.applyForce(velocity);
+    o0.applyForce(velocity);  */
   }
+
+  
+  OrbNode selected = LL.getSelected(mouseX, mouseY);
+  if (selected != null) {
+    LL.removeNode(selected);
+  }
+}//mousePressed
+void reset(){
+  front = null;
+  LL = new OrbList();
+  LL.populate(NUM_ORBS, false);
 }
 
 void displayMode() {

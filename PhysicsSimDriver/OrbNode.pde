@@ -13,6 +13,7 @@ class OrbNode extends Orb {
 
   void display() {
     super.display();
+    if (toggles[SPRING] || toggles[CENTRIPETAL]){
     if (next != null) {
       float dnext = this.center.dist(next.center);
       if (dnext < SPRING_LENGTH) { stroke(0, 255, 0); }
@@ -28,6 +29,7 @@ class OrbNode extends Orb {
       else { stroke(0); }
       line(this.center.x, this.center.y-2, previous.center.x, previous.center.y-2);
     }//next spring
+    }
   }//drawSpring
 
   void applySprings(int springLength, float springK) {
