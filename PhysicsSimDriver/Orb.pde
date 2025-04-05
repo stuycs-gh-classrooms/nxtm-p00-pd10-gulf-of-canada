@@ -8,6 +8,7 @@ class Orb {
   float mass;
   color c;
   float maxSpeed;
+  boolean demo5Gravity;
 
 
   Orb() {
@@ -20,7 +21,7 @@ class Orb {
     acceleration = new PVector();
     setColor();
     maxSpeed = 400;
-  }
+  } //constructor
 
   Orb(float x, float y, float s, float m) {
     bsize = s;
@@ -30,7 +31,7 @@ class Orb {
     acceleration = new PVector();
     setColor();
     maxSpeed = 400;
-  }
+  } //overloaded constructor
 
   //movement behavior
   void move() {
@@ -40,7 +41,7 @@ class Orb {
     }
 
     velocity.add(acceleration);
-    
+
     center.add(velocity);
     acceleration.mult(0);
   }//move
@@ -49,7 +50,7 @@ class Orb {
     PVector scaleForce = force.copy();
     scaleForce.div(mass);
     acceleration.add(scaleForce);
-  }
+  }//applyForce
 
   PVector getDragForce(float cd) {
     float dragMag = velocity.mag();
@@ -58,7 +59,7 @@ class Orb {
     dragForce.normalize();
     dragForce.mult(dragMag);
     return dragForce;
-  }
+  }//getDrag
 
   PVector getGravity(Orb other, float G) {
     float strength = G * mass*other.mass;
@@ -68,7 +69,7 @@ class Orb {
     force.sub(center);
     force.mult(strength);
     return force;
-  }
+  }//getGravity
 
   //spring force between calling orb and other
   PVector getSpring(Orb other, int springLength, float springK) {
@@ -84,20 +85,19 @@ class Orb {
   PVector getCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
     float radius = max(max(this.bsize, other.bsize), PVector.dist(other.center, this.center)); //the bigger of the two orbs otherwise will teleport from center to fixed distance away
     float centripetalForce = this.mass * this.velocity.magSq() / radius;
-    
+
     if (fixedStringLength) {
-        radius = stringLength;
+      radius = stringLength;
     }
-    
+
     PVector direction = PVector.sub(other.center, this.center).normalize();
     direction.mult(centripetalForce);
-    
-    return direction;
-}
-  PVector makeTangent(PVector r){
-   return new PVector(-r.y, r.x); //tangent vector
 
-  }
+    return direction;
+  }//getCentripetal
+  PVector makeTangent(PVector r) {
+    return new PVector(-r.y, r.x); 
+  }//makeTangent
 
   boolean yBounce() {
     if (center.y > height - bsize/2) {
@@ -142,12 +142,10 @@ class Orb {
     c = lerpColor(c0, c1, (mass-MIN_SIZE)/(MAX_MASS-MIN_SIZE));
   }//setColor
 
-  //visual behavior
   void display() {
     noStroke();
     fill(c);
     circle(center.x, center.y, bsize);
     fill(0);
-    //text(mass, center.x, center.y);
   }//display
 }//Orb
