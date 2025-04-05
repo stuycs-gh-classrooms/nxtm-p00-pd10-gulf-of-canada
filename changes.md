@@ -85,7 +85,7 @@ Describe what your drag simulation will look like. Explain how it will be setup,
 ### Simulation 4: Centripetal force
 Describe what your Custom force simulation will look like. Explain how it will be setup, and how it should behave while running.
 
-10 orbs are randomly placed on screen with a fixedOrb in the center. There is a line that connects the orbs to the fxedOrb. Initially the orbs will stay still but when the mouse is pressed, tangential velocity from the fixedOrb to this orb is applied to the orb. Despite the tangential force being applied in one direction, the orb moves circularly. If moving too fast, the orbs should get further from the fixedOrb.
+10 orbs are randomly placed on screen with a fixedOrb in the center. There is a line that connects the orbs to the fxedOrb. Initially the orbs will stay still but when the mouse is pressed, tangential velocity from the fixedOrb to this orb is applied to the orb. Despite the tangential force being applied in one direction, the orb moves circularly. The orbs should get further from the fixedOrb as time goes on, depending on the speed.
 
 --- 
 
