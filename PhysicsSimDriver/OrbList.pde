@@ -4,7 +4,7 @@ class OrbList {
 
   OrbList() {
     front = null;
-  }//constructor
+  }// constructor
 
   void assignDemo5Force() {
     for (OrbNode i = front; i != null; i = i.next) {  //Linked List For Loop implementation with inspiration from Mr. DW and Lucas Zheng
