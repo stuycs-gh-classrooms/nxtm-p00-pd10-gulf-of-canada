@@ -74,7 +74,7 @@ void draw() {
     if (toggles[CENTRIPETAL]) {
     fill(0);
     textSize(16);
-    text("(Click to activate)", 290, 30); 
+    text("(Click to activate)", 370, 30); 
     }
     
   }//moving
