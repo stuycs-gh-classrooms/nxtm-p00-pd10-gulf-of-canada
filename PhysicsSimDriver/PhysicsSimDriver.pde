@@ -27,7 +27,6 @@ OrbList LL;
 void setup() {
   size(600, 600);
 
-  //earth = new FixedOrb(width/2, height /2, 3 * MAX_SIZE,  MAX_MASS);
   earth = new FixedOrb(width/2, height * 200, 1, 20000);
   front = null;
   LL = new OrbList();
@@ -39,11 +38,10 @@ void setup() {
 void draw() {
   background(255);
   displayMode();
+
   if (toggles[MOVING]) {
 
     if (toggles[GRAVITY]) {
-      //earth.display();
-      //toggles[BOUNCE] = true;
       LL.applyGravity(earth, G_CONSTANT);
     } //gravity
 
@@ -64,26 +62,22 @@ void draw() {
     if (toggles[CENTRIPETAL]) {
       LL.applyCentripetal(o, true, SPRING_LENGTH);
       o.display();
+
+      fill(0);
+      textSize(16);
+      text("(Click to activate)", 370, 30);
     } //centripetal
     if (toggles[COMBINED]) {
       LL.applyCombo(o, false, SPRING_LENGTH, G_CONSTANT);
       o.display();
+
+      fill(0);
+      textSize(16);
+      text("(Click to activate)", 470, 30);
     } //combined
-    
+
     LL.display();
     LL.run(toggles[BOUNCE]);
-    if (toggles[CENTRIPETAL]) {
-    fill(0);
-    textSize(16);
-    text("(Click to activate)", 370, 30); 
-    }
-    
-    if (toggles[COMBINED]) {
-    fill(0);
-    textSize(16);
-    text("(Click to activate)", 470, 30); 
-    }
-    
   }//moving
 }//draw
 
@@ -101,7 +95,7 @@ void keyPressed() {
     toggles[DRAGF] = false;
     toggles[CENTRIPETAL] = false;
     toggles[COMBINED] = false;
-    reset(); 
+    reset();
   } //activate gravity
   if (key == '2') {
     toggles[SPRING] = !toggles[SPRING];
@@ -150,9 +144,9 @@ void mousePressed() {
   if (toggles[CENTRIPETAL] || toggles[COMBINED]) {
     LL.applyTangent();
   } //apply Tangent
-  
+
   OrbNode selected = LL.getSelected(mouseX, mouseY);
-  
+
   if (selected != null) {
     LL.removeNode(selected);
   } //remove selected Node
@@ -183,7 +177,7 @@ void displayMode() {
     fill(0);
     text(modes[m], x+2, 2);
     if (m == 1) {
-     x+= w+20; 
+      x+= w+20;
     }
     x+= w+5;
   }

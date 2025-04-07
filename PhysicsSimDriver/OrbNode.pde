@@ -42,23 +42,12 @@ class OrbNode extends Orb {
 
   void display(Orb o) {
     super.display();
-    if (toggles[COMBINED]) {
+    if (toggles[CENTRIPETAL] || toggles[COMBINED]) {
         float dnext = this.center.dist(o.center);
         if (dnext < SPRING_LENGTH) {
           stroke(0, 255, 0);
         } else if (dnext > SPRING_LENGTH) {
           stroke(255, 0, 0);
-        } else {
-          stroke(0);
-        }
-        line(this.center.x, this.center.y+2, o.center.x, o.center.y+2);
-      }
-     if (toggles[CENTRIPETAL]) {
-        float dnext = this.center.dist(o.center);
-        if (dnext < SPRING_LENGTH) {
-          stroke(0, 0, 255);
-        } else if (dnext > SPRING_LENGTH) {
-          stroke(255, 0, 255);
         } else {
           stroke(0);
         }
