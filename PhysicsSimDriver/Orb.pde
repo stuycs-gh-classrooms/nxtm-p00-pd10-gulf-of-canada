@@ -20,7 +20,7 @@ class Orb {
     velocity = new PVector();
     acceleration = new PVector();
     setColor();
-    maxSpeed = 400;
+    maxSpeed = 5;
   } //constructor
 
   Orb(float x, float y, float s, float m) {
@@ -30,7 +30,7 @@ class Orb {
     velocity = new PVector();
     acceleration = new PVector();
     setColor();
-    maxSpeed = 400;
+    maxSpeed = 5;
   } //overloaded constructor
 
   //movement behavior
@@ -39,8 +39,10 @@ class Orb {
       xBounce();
       yBounce();
     }
-
+    
+    if (velocity.mag() < maxSpeed) {
     velocity.add(acceleration);
+    }
 
     center.add(velocity);
     acceleration.mult(0);
