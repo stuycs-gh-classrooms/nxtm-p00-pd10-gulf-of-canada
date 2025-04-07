@@ -175,6 +175,9 @@ void displayMode() {
     rect(x, 0, w+5, 20);
     fill(0);
     text(modes[m], x+2, 2);
+    if (m == 1) {
+     x+= w+20; 
+    }
     x+= w+5;
   }
 }//display
