@@ -77,6 +77,12 @@ void draw() {
     text("(Click to activate)", 370, 30); 
     }
     
+    if (toggles[COMBINED]) {
+    fill(0);
+    textSize(16);
+    text("(Click to activate)", 470, 30); 
+    }
+    
   }//moving
 }//draw
 
