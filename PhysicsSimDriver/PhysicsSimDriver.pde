@@ -27,7 +27,8 @@ OrbList LL;
 void setup() {
   size(600, 600);
 
-  earth = new FixedOrb(width/2, height /2, 3 * MAX_SIZE, 3 * MAX_MASS);
+  //earth = new FixedOrb(width/2, height /2, 3 * MAX_SIZE,  MAX_MASS);
+  earth = new FixedOrb(width/2, height * 200, 1, 20000);
   front = null;
   LL = new OrbList();
   LL.populate(NUM_ORBS);
@@ -41,7 +42,7 @@ void draw() {
   if (toggles[MOVING]) {
 
     if (toggles[GRAVITY]) {
-      earth.display();
+      //earth.display();
       //toggles[BOUNCE] = true;
       LL.applyGravity(earth, G_CONSTANT);
     } //gravity
