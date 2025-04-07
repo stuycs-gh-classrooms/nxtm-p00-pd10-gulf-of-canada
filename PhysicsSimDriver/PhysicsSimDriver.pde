@@ -1,132 +1,180 @@
-class OrbList {
+int NUM_ORBS = 10;
+int MIN_SIZE = 10;
+int MAX_SIZE = 60;
+float MIN_MASS = 10;
+float MAX_MASS = 100;
+float G_CONSTANT = 1;
+float D_COEF = 0.1;
 
-  OrbNode front;
+int SPRING_LENGTH = 50;
+float  SPRING_K = 0.005;
 
-  OrbList() {
-    front = null;
-  }//constructor
+int MOVING = 0;
+int BOUNCE = 1;
+int GRAVITY = 2;
+int SPRING = 3;
+int DRAGF = 4;
+int CENTRIPETAL = 5;
+int COMBINED = 6;
+boolean[] toggles = new boolean[7];
+String[] modes = {"Moving", "Bounce", "Gravity", "Spring", "Drag", "Centripetal", "Combined"};
 
-  void assignDemo5Force() {
-    for (OrbNode i = front; i != null; i = i.next) {  //Linked List For Loop implementation with inspiration from Mr. DW and Lucas Zheng
-      if (random(1) < 0.5) {
-        i.demo5Gravity = true; // In demo 5, Only Gravity gets applied to Orb
-      } else {
-        i.demo5Gravity = false; // In demo 5, Only Centripetal gets applied to Orb
-      }
+FixedOrb earth, o;
+OrbNode front;
+OrbList LL;
+
+
+void setup() {
+  size(600, 600);
+
+  earth = new FixedOrb(width/2, height /2, 3 * MAX_SIZE, 3 * MAX_MASS);
+  front = null;
+  LL = new OrbList();
+  LL.populate(NUM_ORBS);
+
+  o = new FixedOrb(width/2, height/2, random(MIN_SIZE, MAX_SIZE), random(MIN_MASS, MAX_MASS));
+}//setup
+
+void draw() {
+  background(255);
+  displayMode();
+  if (toggles[MOVING]) {
+
+    if (toggles[GRAVITY]) {
+      earth.display();
+      //toggles[BOUNCE] = true;
+      LL.applyGravity(earth, G_CONSTANT);
+    } //gravity
+
+    if (toggles[SPRING]) {
+      LL.applySprings(SPRING_LENGTH, SPRING_K);
+    } //spring
+
+    if (toggles[DRAGF]) {
+      fill(225, 0, 0);
+      rect(0, 200, width, 200);
+      fill(36, 205, 236);
+      rect(0, 400, width, 200);
+
+      LL.applyGravity(earth, G_CONSTANT);
+      LL.applyDrag(D_COEF);
+    } //dragf
+
+    if (toggles[CENTRIPETAL]) {
+      LL.applyCentripetal(o, true, SPRING_LENGTH);
+      o.display();
+    } //centripetal
+    if (toggles[COMBINED]) {
+      LL.applyCombo(o, false, SPRING_LENGTH, G_CONSTANT);
+      o.display();
+    } //combined
+    
+    LL.display();
+    LL.run(toggles[BOUNCE]);
+    if (toggles[CENTRIPETAL]) {
+    fill(0);
+    textSize(16);
+    text("(Click to activate)", 290, 30); 
     }
-  } //randomly assigns orbs either Centripetal or Gravity in Demo 5
+    
+  }//moving
+}//draw
 
-  void populate(int n) {
-    front = null; //clear list, all the nexts and previouses are only accessible given front's next or previous is meaningful
-    front = new OrbNode(); //since first element is null
-    for (int i = 0; i < n-1; i ++) {
-      addFront(new OrbNode());
-    }
-    assignDemo5Force();
-  }//populate
-  void applyGravity(Orb other, float gConstant) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      PVector appG = i.getGravity(other, gConstant);
-      i.applyForce(appG);
-    }
-  }//applySprings
 
-  void applySprings(int springLength, float springK) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      i.applySprings(springLength, springK);
-    }
-  }//applySprings
+void keyPressed() {
+  if (key == ' ') {
+    toggles[MOVING] = !toggles[MOVING];
+  }
+  if (key == 'b') {
+    toggles[BOUNCE] = !toggles[BOUNCE];
+  }
+  if (key == '1') {
+    toggles[GRAVITY] = !toggles[GRAVITY];
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
+    reset(); 
+  } //activate gravity
+  if (key == '2') {
+    toggles[SPRING] = !toggles[SPRING];
+    toggles[GRAVITY] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
+    reset();
+  } //activate spring
+  if (key == '3') {
+    toggles[DRAGF] = !toggles[DRAGF];
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[CENTRIPETAL] = false;
+    toggles[COMBINED] = false;
+    reset();
+  } //activate dragf
+  if (key == '4') {
+    toggles[CENTRIPETAL] = !toggles[CENTRIPETAL];
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[COMBINED] = false;
+    reset();
+  } //activate centripetal
+  if (key == '5') {
+    toggles[COMBINED] = !toggles[COMBINED];
+    toggles[GRAVITY] = false;
+    toggles[SPRING] = false;
+    toggles[DRAGF] = false;
+    toggles[CENTRIPETAL] = false;
+    reset();
+  } //activate combined
+  if (key == '+' || key == '=') {
+    LL.addFront(new OrbNode());
+  } //add
+  if (key == '-') {
+    LL.removeFront();
+  } //remove
+  if (key == 'r') {
+    reset();
+  } //reset
+}//keyPressed
 
-  void applyDrag(float dCoef) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      if (i.center.y > 200) {
-        PVector appD = i.getDragForce(dCoef);
-        i.applyForce(appD.mult(5));
-        if (i.center.y > 400) {
-          i.applyForce(appD.mult(10));
-        }
-      }
-    }
-  }//applyDrag
-
-  void applyCentripetal(Orb other, boolean fixedStringLength, int stringLength) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      PVector appC = i.getCentripetal(other, fixedStringLength, stringLength);
-      i.applyForce(appC);
-    }
-  } //applyCentripetal
-
-  void applyTangent() {
-    for (OrbNode i = front; i != null; i = i.next) {
-      PVector appT = i.makeTangent(i.getGravity(o, G_CONSTANT));
-      i.applyForce(appT);
-    } //returns vector tangent to gravity
-  } //applyTangent
+void mousePressed() {
+  if (toggles[CENTRIPETAL] || toggles[COMBINED]) {
+    LL.applyTangent();
+  } //apply Tangent
   
-  void applyCombo(Orb other, boolean fixedStringLength, int stringLength,  float gConstant) {
-    for (OrbNode i = front; i != null; i = i.next){
-      if (i.demo5Gravity){
-        PVector appG = i.getGravity(other, gConstant);
-        i.applyForce(appG);
-      }
-      else{
-        PVector appC = i.getCentripetal(other, fixedStringLength, stringLength);
-        i.applyForce(appC);
-      }
-    }
-  }//applyCombo
+  OrbNode selected = LL.getSelected(mouseX, mouseY);
+  
+  if (selected != null) {
+    LL.removeNode(selected);
+  } //remove selected Node
+}//mousePressed
+void reset() {
+  front = null;
+  LL = new OrbList();
+  LL.populate(NUM_ORBS);
+}
 
-  void addFront(OrbNode o) {
-    front.previous = o;
-    o.next = front;
-    front = front.previous;
-  }//addFront
+void displayMode() {
+  textAlign(LEFT, TOP);
+  textSize(20);
+  noStroke();
+  int spacing = 85;
+  int x = 0;
 
-  void removeFront() {
-    front = front.next; //change forward pointer
-    front.previous = null; //deleting
-  }//removeFront
+  for (int m=0; m<toggles.length; m++) {
+    //set box color
+    if (toggles[m]) {
+      fill(0, 255, 0);
+    } else {
+      fill(255, 0, 0);
+    }
 
-  OrbNode getSelected(float x, float y) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      if (i.isSelected(x, y)) {
-        return i;
-      }
-    }
-    return null;
-  }//getSelected
-
-  void removeNode(OrbNode o) {
-    if (o.previous != null) {
-      o.previous.next = o.next;
-    }
-    if (o.next != null) {
-      o.next.previous = o.previous;
-    }
-  }//remove node
-
-  void display() {
-    for (OrbNode i = front; i != null; i = i.next) {
-      if (toggles[CENTRIPETAL]) {
-        i.display(o);
-      } //display springs for demo 4
-      else if (toggles[COMBINED]){
-        if (i.demo5Gravity){
-          i.display();
-        }
-        else{
-          i.display(o);
-        }
-      } //display springs for demo 5
-      else {
-        i.display();
-      } //display orb
-    }
-  }//display
-
-  void run(boolean bounce) {
-    for (OrbNode i = front; i != null; i = i.next) {
-      i.move();
-    }
-  }//applySprings
-}//OrbList
+    float w = textWidth(modes[m]);
+    rect(x, 0, w+5, 20);
+    fill(0);
+    text(modes[m], x+2, 2);
+    x+= w+5;
+  }
+}//display
